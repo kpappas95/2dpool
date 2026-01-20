@@ -1,0 +1,115 @@
+[gd_scene load_steps=20 format=3 uid="uid://cosoghj1wqobu"]
+
+[ext_resource type="Script" uid="uid://buq16a0we00ke" path="res://scenes/main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://d4vfjdgqrl03" path="res://scenes/pool_table.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bgdh0b0i7u0ts" path="res://scenes/ball.tscn" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://uobgk4kcktil" path="res://scenes/cue.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://c0to0edpwakvk" path="res://scenes/spin.tscn" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://dvlmg7s4mv4d7" path="res://Images/ball_1.png" id="6_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://6qrjkfn0rae1" path="res://Images/ball_2.png" id="7_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://cavd6rf1ncswh" path="res://Images/ball_3.png" id="8_jbj1t"]
+[ext_resource type="Texture2D" uid="uid://dmikivjwabk4p" path="res://Images/ball_4.png" id="9_muem4"]
+[ext_resource type="Texture2D" uid="uid://d275onnbf6kyx" path="res://Images/ball_5.png" id="10_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://ddrr5m0avpxxt" path="res://Images/ball_6.png" id="11_0ld40"]
+[ext_resource type="Texture2D" uid="uid://cfpoicrh13uqp" path="res://Images/ball_7.png" id="12_gqmmt"]
+[ext_resource type="Texture2D" uid="uid://bl6d1fm8p8lci" path="res://Images/ball_8.png" id="13_yc10j"]
+[ext_resource type="Texture2D" uid="uid://to0w2o0qqn0p" path="res://Images/ball_9.png" id="14_jscy8"]
+[ext_resource type="Texture2D" uid="uid://n3e5mviimttq" path="res://Images/ball_16.png" id="15_jkv2x"]
+[ext_resource type="AudioStream" uid="uid://0jitbbwji0c6" path="res://Audio/applause2.wav" id="16_0ld40"]
+[ext_resource type="AudioStream" uid="uid://1oym0digig8u" path="res://Audio/boo2.wav" id="17_gqmmt"]
+[ext_resource type="AudioStream" uid="uid://dwgetkp3q20kn" path="res://Audio/cue2.wav" id="18_yc10j"]
+[ext_resource type="AudioStream" uid="uid://bpib4xrvt4e6j" path="res://Audio/pot2.wav" id="19_jscy8"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0xm2m")
+ball_scene = ExtResource("2_sugp2")
+
+[node name="PoolTable" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="Cue" parent="." instance=ExtResource("4_jyhfs")]
+
+[node name="Spin" parent="." instance=ExtResource("5_tbgi4")]
+
+[node name="Ball Colors" type="Node2D" parent="."]
+position = Vector2(295, 556)
+scale = Vector2(0.45665228, 0.45665228)
+
+[node name="Ball_1" type="Sprite2D" parent="Ball Colors"]
+texture = ExtResource("6_a8y0u")
+
+[node name="Ball_2" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(155.47935, 0)
+texture = ExtResource("7_jkv2x")
+
+[node name="Ball_3" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(313.14856, 0)
+texture = ExtResource("8_jbj1t")
+
+[node name="Ball_4" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(466.43808, 0)
+texture = ExtResource("9_muem4")
+
+[node name="Ball_5" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(624.1073, 0)
+texture = ExtResource("10_dp3eg")
+
+[node name="Ball_6" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(777.3968, 0)
+texture = ExtResource("11_0ld40")
+
+[node name="Ball_7" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(930.6863, 0)
+texture = ExtResource("12_gqmmt")
+
+[node name="Ball_8" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(1086.1656, 0)
+texture = ExtResource("13_yc10j")
+
+[node name="Ball_9" type="Sprite2D" parent="Ball Colors"]
+position = Vector2(1241.645, 0)
+texture = ExtResource("14_jscy8")
+
+[node name="outline" type="Sprite2D" parent="Ball Colors"]
+z_index = -1
+position = Vector2(-4.3795166, 0)
+scale = Vector2(1.12, 1.12)
+texture = ExtResource("15_jkv2x")
+
+[node name="Home" type="Button" parent="."]
+offset_left = 1004.0
+offset_top = 7.0
+offset_right = 1059.0
+offset_bottom = 38.0
+scale = Vector2(1.864936, 1.864936)
+text = "Home"
+
+[node name="Lives" type="Node2D" parent="."]
+position = Vector2(35.999996, 53.999996)
+scale = Vector2(0.31423903, 0.31423903)
+
+[node name="Live1" type="Sprite2D" parent="Lives"]
+texture = ExtResource("15_jkv2x")
+
+[node name="Live2" type="Sprite2D" parent="Lives"]
+position = Vector2(146.38539, 0)
+texture = ExtResource("15_jkv2x")
+
+[node name="Live3" type="Sprite2D" parent="Lives"]
+position = Vector2(292.77075, 0)
+texture = ExtResource("15_jkv2x")
+
+[node name="Win sound" type="AudioStreamPlayer2D" parent="." groups=["sound"]]
+stream = ExtResource("16_0ld40")
+
+[node name="Lose sound" type="AudioStreamPlayer2D" parent="." groups=["sound"]]
+stream = ExtResource("17_gqmmt")
+
+[node name="Cue Hit sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_yc10j")
+
+[node name="Pot sound" type="AudioStreamPlayer2D" parent="." groups=["sound"]]
+stream = ExtResource("19_jscy8")
+
+[connection signal="balls_stopped" from="." to="." method="_on_balls_stopped"]
+[connection signal="shoot" from="Cue" to="." method="_on_cue_shoot"]
+[connection signal="pressed" from="Home" to="." method="_on_home_pressed"]

@@ -1,0 +1,189 @@
+[gd_scene load_steps=19 format=3 uid="uid://d4vfjdgqrl03"]
+
+[ext_resource type="Texture2D" uid="uid://dswn0fytean03" path="res://Images/table.png" id="1_d1x20"]
+[ext_resource type="Script" uid="uid://chkdejlodjeqr" path="res://scenes/pool_surface.gd" id="3_lc8th"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lc8th"]
+friction = 0.89
+bounce = 0.94
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5dqc"]
+size = Vector2(9.164991, 227.49947)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yk164"]
+size = Vector2(9.036143, 298.0263)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_nbvsd"]
+a = Vector2(85, 22)
+b = Vector2(99, 37)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5hoob"]
+a = Vector2(549, 166)
+b = Vector2(553.00006, 150.99991)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_td8wc"]
+a = Vector2(597, 166)
+b = Vector2(592.00006, 150.99991)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5fkh7"]
+a = Vector2(865.00006, 164.99985)
+b = Vector2(880, 149)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_762mq"]
+size = Vector2(9.103079, 254.49934)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryorf"]
+size = Vector2(9.147427, 330.92102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wfwny"]
+size = Vector2(247, 269)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_sar5q"]
+a = Vector2(250.99994, 192.00006)
+b = Vector2(234.99994, 177.00006)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_et2wi"]
+a = Vector2(234.99988, 473.00006)
+b = Vector2(250.99988, 458.00006)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x5c5t"]
+size = Vector2(254, 267.99997)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lc8th"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_660v7"]
+size = Vector2(17.631165, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1x20"]
+size = Vector2(299.51337, 146.20764)
+
+[node name="PoolTable" type="Node2D"]
+
+[node name="TableSprite" type="Sprite2D" parent="."]
+position = Vector2(570, 212)
+scale = Vector2(-0.15999997, -0.15999997)
+texture = ExtResource("1_d1x20")
+
+[node name="Cushions" type="StaticBody2D" parent="."]
+position = Vector2(1, -113)
+physics_material_override = SubResource("PhysicsMaterial_lc8th")
+
+[node name="TopLeft" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(414.075, 52.750015)
+scale = Vector2(29.879997, 1.0000024)
+shape = SubResource("RectangleShape2D_c5dqc")
+
+[node name="TopRight" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(730, 53.25)
+scale = Vector2(29.879997, 0.75999993)
+shape = SubResource("RectangleShape2D_yk164")
+
+[node name="Jaw1" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(179, 128)
+shape = SubResource("SegmentShape2D_nbvsd")
+
+[node name="Jaw2" type="CollisionShape2D" parent="Cushions"]
+shape = SubResource("SegmentShape2D_5hoob")
+
+[node name="Jaw3" type="CollisionShape2D" parent="Cushions"]
+shape = SubResource("SegmentShape2D_td8wc")
+
+[node name="Jaw4" type="CollisionShape2D" parent="Cushions"]
+shape = SubResource("SegmentShape2D_5fkh7")
+
+[node name="BottomLeft" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(731, 610.7501)
+rotation = -3.1415925
+scale = Vector2(29.879997, 1.0000024)
+shape = SubResource("RectangleShape2D_762mq")
+
+[node name="BottomRight" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(413.82507, 609.2501)
+rotation = -3.1415925
+scale = Vector2(29.879997, 0.75999993)
+shape = SubResource("RectangleShape2D_ryorf")
+
+[node name="Jaw5" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(965, 522)
+rotation = -3.1415925
+shape = SubResource("SegmentShape2D_nbvsd")
+
+[node name="Jaw6" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(1146, 650)
+rotation = -3.1415925
+shape = SubResource("SegmentShape2D_5hoob")
+
+[node name="Jaw7" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(1146, 650)
+rotation = -3.1415925
+shape = SubResource("SegmentShape2D_td8wc")
+
+[node name="Jaw8" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(1143, 650)
+rotation = -3.1415925
+shape = SubResource("SegmentShape2D_5fkh7")
+
+[node name="Left2" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(128.5, 325.5)
+shape = SubResource("RectangleShape2D_wfwny")
+
+[node name="Jaw9" type="CollisionShape2D" parent="Cushions"]
+shape = SubResource("SegmentShape2D_sar5q")
+
+[node name="Jaw10" type="CollisionShape2D" parent="Cushions"]
+shape = SubResource("SegmentShape2D_et2wi")
+
+[node name="Right2" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(1013, 325)
+rotation = 3.1415925
+shape = SubResource("RectangleShape2D_x5c5t")
+
+[node name="Jaw11" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(1138, 650)
+rotation = 3.1415925
+shape = SubResource("SegmentShape2D_sar5q")
+
+[node name="Jaw12" type="CollisionShape2D" parent="Cushions"]
+position = Vector2(1138, 650)
+rotation = 3.1415925
+shape = SubResource("SegmentShape2D_et2wi")
+
+[node name="Pockets" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pockets"]
+position = Vector2(200.00002, -1.0000005)
+scale = Vector2(4.936921, 4.936921)
+shape = SubResource("RectangleShape2D_lc8th")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pockets"]
+position = Vector2(944.00006, -2)
+scale = Vector2(4.936921, 4.936921)
+shape = SubResource("RectangleShape2D_lc8th")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Pockets"]
+position = Vector2(945.00006, 425.00003)
+scale = Vector2(4.936921, 4.936921)
+shape = SubResource("RectangleShape2D_lc8th")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Pockets"]
+position = Vector2(200.00002, 425.00003)
+scale = Vector2(4.936921, 4.936921)
+shape = SubResource("RectangleShape2D_lc8th")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Pockets"]
+position = Vector2(574, -14.000001)
+scale = Vector2(1.7035506, 5.571344)
+shape = SubResource("RectangleShape2D_660v7")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="Pockets"]
+position = Vector2(575, 440.00003)
+scale = Vector2(1.7035506, 5.571344)
+shape = SubResource("RectangleShape2D_660v7")
+
+[node name="PoolSurface" type="Area2D" parent="."]
+script = ExtResource("3_lc8th")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PoolSurface"]
+position = Vector2(570, 212)
+scale = Vector2(2.1100898, 2.1613097)
+shape = SubResource("RectangleShape2D_d1x20")

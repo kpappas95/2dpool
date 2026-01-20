@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgdh0b0i7u0ts"]
+
+[ext_resource type="Script" uid="uid://dwl7plntyb30t" path="res://scenes/balllegit.gd" id="1_cxlvu"]
+[ext_resource type="Texture2D" uid="uid://dvlmg7s4mv4d7" path="res://Images/ball_1.png" id="2_f7cbr"]
+[ext_resource type="Script" uid="uid://cribe1wvrrspt" path="res://scenes/ballarea.gd" id="3_4dx81"]
+[ext_resource type="AudioStream" uid="uid://bf38kainf66cy" path="res://Audio/pool-ball-hit2.wav" id="4_4dx81"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7s4qf"]
+friction = 0.05
+bounce = 0.92
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_41u45"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eew57"]
+
+[node name="Ball" type="RigidBody2D" groups=["balls"]]
+physics_material_override = SubResource("PhysicsMaterial_7s4qf")
+gravity_scale = 0.0
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 4
+linear_damp = 0.14
+angular_damp = 0.2
+script = ExtResource("1_cxlvu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.5, 0)
+scale = Vector2(0.14822282, 0.14944823)
+texture = ExtResource("2_f7cbr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.1, -0.08)
+scale = Vector2(1.060328, 1.060328)
+shape = SubResource("CircleShape2D_41u45")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+position = Vector2(0.05, 0)
+scale = Vector2(0.9226254, 0.9226254)
+script = ExtResource("3_4dx81")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.08, 0)
+scale = Vector2(-1.1358229, -1.1333894)
+shape = SubResource("CircleShape2D_eew57")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Area2D"]
+stream = ExtResource("4_4dx81")
+volume_db = 5.0
+mix_target = 2
+
+[node name="Node" type="Node" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

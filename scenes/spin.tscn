@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0to0edpwakvk"]
+
+[ext_resource type="Texture2D" uid="uid://n3e5mviimttq" path="res://Images/ball_16.png" id="1_bgo38"]
+[ext_resource type="Script" uid="uid://cht8dtd6g7vgf" path="res://Scripts/spin_area.gd" id="1_s2fde"]
+[ext_resource type="Texture2D" uid="uid://c2s2lepmw4ek6" path="res://Images/red_dot.png" id="2_s2fde"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bgo38"]
+
+[node name="Spin" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_s2fde")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1044, 551)
+scale = Vector2(3.9975443, 3.9975443)
+shape = SubResource("CircleShape2D_bgo38")
+
+[node name="Ball" type="Sprite2D" parent="Area2D"]
+position = Vector2(1044, 551)
+scale = Vector2(0.54428065, 0.54428065)
+texture = ExtResource("1_bgo38")
+
+[node name="Point" type="Sprite2D" parent="Area2D/Ball"]
+scale = Vector2(0.060307123, 0.060307123)
+texture = ExtResource("2_s2fde")
+
+[connection signal="mouse_entered" from="Area2D" to="Area2D" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="Area2D" method="_on_mouse_exited"]

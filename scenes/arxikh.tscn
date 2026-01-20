@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://c85q8wa03aoj1"]
+
+[ext_resource type="Script" uid="uid://mkji601clpig" path="res://Scripts/button.gd" id="1_rmhka"]
+[ext_resource type="Texture2D" uid="uid://dscoyygbueyef" path="res://Images/Americian-9-Ball-Close-Up-R.png" id="2_fg00j"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="How to" type="Node2D" parent="."]
+visible = false
+
+[node name="how to" type="Label" parent="How to"]
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 214.0
+offset_bottom = 52.0
+scale = Vector2(2.781928, 3.0679476)
+theme_override_font_sizes/font_size = 29
+text = "HOW TO PLAY:"
+
+[node name="instructions" type="Label" parent="How to"]
+offset_left = 10.0
+offset_top = 135.0
+offset_right = 268.0
+offset_bottom = 208.0
+scale = Vector2(2.3988843, 1.7393929)
+theme_override_font_sizes/font_size = 25
+text = "Aim: Move the cursor
+Shoot: Click and drag"
+
+[node name="power" type="Label" parent="How to"]
+offset_left = 10.0
+offset_top = 255.0
+offset_right = 419.0
+offset_bottom = 278.0
+scale = Vector2(1.9147944, 2.0174575)
+text = "(the further you drag the more power is generated)"
+
+[node name="Spin" type="Label" parent="How to"]
+offset_left = 10.0
+offset_top = 318.00003
+offset_right = 799.0
+offset_bottom = 367.00003
+scale = Vector2(1.4254192, 1.622979)
+text = "Spin (optional): Click and drag anywhere on the ball icon on the bottom right to apply the desired spin.
+Right click on it to reset the spin to center"
+
+[node name="Label" type="Label" parent="How to"]
+offset_left = 10.0
+offset_top = 438.00003
+offset_right = 557.0
+offset_bottom = 513.0
+scale = Vector2(1.2396913, 1.8307189)
+text = "Rules:
+1) You must hit the lowest numbered ball first.
+2) If no balls are potted, at least one ball must hit a cushion after a legal hit.
+3) If the 9 ball is potted with an illegal hit, it respawns at the spot where the one ball is racked."
+
+[node name="Button" type="Button" parent="."]
+offset_left = 934.0
+offset_top = 565.0
+offset_right = 998.0
+offset_bottom = 596.0
+scale = Vector2(3.0328863, 2.0443325)
+text = "How to"
+script = ExtResource("1_rmhka")
+
+[node name="Goal" type="Node2D" parent="."]
+position = Vector2(0, 26)
+
+[node name="Goal" type="Label" parent="Goal"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(4.8767896, 11.84926, 1.3128003, 1)
+theme_override_font_sizes/font_size = 50
+text = "Hit the lowest numbered ball first.
+Pot the 9 ball to win!
+
+
+
+You have 3 lives.
+Everytime you foul, you lose one life.
+(rules  on the next page)"
+
+[node name="Label" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.59607846)
+z_index = -1
+position = Vector2(0, -42)
+scale = Vector2(0.28962964, 0.28962964)
+texture = ExtResource("2_fg00j")
+centered = false
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://uobgk4kcktil"]
+
+[ext_resource type="Texture2D" uid="uid://jf1s8s3q7pu6" path="res://scenes/cuee.PNG" id="1_lreqr"]
+[ext_resource type="Script" uid="uid://d4mwmnqwafp03" path="res://scenes/cue.gd" id="1_qdt3q"]
+[ext_resource type="PackedScene" uid="uid://c0to0edpwakvk" path="res://scenes/spin.tscn" id="3_qdt3q"]
+
+[node name="Cue" type="Node2D"]
+script = ExtResource("1_qdt3q")
+max_pull_distance = 250.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2
+z_as_relative = false
+scale = Vector2(0.149, 0.149)
+texture = ExtResource("1_lreqr")
+offset = Vector2(1657.2013, -717.34814)
+
+[node name="cue_butt" type="Node2D" parent="Sprite2D"]
+position = Vector2(3798.658, 13.422852)
+scale = Vector2(6.7114096, 6.7114096)
+
+[node name="Spin" parent="." instance=ExtResource("3_qdt3q")]
+visible = false
