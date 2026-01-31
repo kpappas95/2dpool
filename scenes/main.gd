@@ -16,6 +16,7 @@ var scratched = false
 var nine_to_reset = false
 var ball_images: = []
 var balls: = []
+var balls_remaining
 var one_ball
 var nine_ball
 var nine_ball_pos = Vector2.ZERO
@@ -25,7 +26,8 @@ var current_ball = 1
 var moving_balls = false
 var cue_ball
 var vel = 0
-var spin = 0
+#var cue_ball.spin = 0
+var side_spin = 0
 var spin_state = 'neutral'
 var rolling_spin = 0.0006
 var ramped = false
@@ -69,6 +71,7 @@ func generate_balls():
 			balls.append(b)
 			b.get_node("Sprite2D").texture = ball_images[current_ball_number]
 			current_ball_number += 1
+	balls_remaining = balls
 	rack_balls()
 		
 func disable_ball_physics():
@@ -108,6 +111,8 @@ func reset_cue_ball():
 	# Move the cue ball out of the screen
 	cue_ball.global_position.x = -500
 	cue_ball.name = "Cue_Ball"
+	cue_ball.spin = 0
+	cue_ball.side_spin = 0
 	add_child(cue_ball)
 	cue_ball.collision.connect(_on_ball_collision)	
 	cue_ball.get_node("Sprite2D").texture = ball_images.back()
@@ -130,10 +135,10 @@ func reset_nine_ball():
 	$"Ball Colors/outline".visible = true
 	
 func reset_cue():
-	
 	$Cue.reset_cue(cue_ball.position)
 
 func _process(_delta: float) -> void:
+	
 	var sounds = get_tree().get_nodes_in_group("sound")
 	
 	var sounds_playing = 0
@@ -151,19 +156,12 @@ func _process(_delta: float) -> void:
 	moving_balls = false
 	# Check if the cue ball is still moving
 	if cue_ball.linear_velocity.length() > 0.8:
-		# Apply the spin forces to the cue ball every frame
-		cue_ball.apply_central_impulse(vel * spin)
+		# Apply the cue_ball.spin forces to the cue ball every frame
+		cue_ball.apply_central_impulse(vel * cue_ball.spin)
 		apply_spin()
-		# Check the type of spin applied
-		if spin < 0:
-			spin_state = 'back'
-		elif spin == 0:
-			spin_state = 'neutral'
-		else:
-			spin_state = 'top'
 		moving_balls = true
 	else:
-		spin = 0
+		pass#cue_ball.spin = 0
 	# Check if all the balls have stopped
 	for ball in balls:
 		if ball:
@@ -171,7 +169,7 @@ func _process(_delta: float) -> void:
 				moving_balls = true
 	if moving_balls:
 		$Cue.hide()
-		moving_balls = false
+		#moving_balls = false
 	else:
 		# Respawn cue ball or nine ball when the shot is completed to avoid premature collisions
 		if scratched or cue_ball.global_position.x == -500:
@@ -196,12 +194,7 @@ func potted_ball(body):
 		call_deferred("reset_cue_ball")
 	else:
 		pottet_ball = true
-		# Check if the potted ball is the lowest numbered ball
-		if str(body.name)[-1] == str(current_ball):
-			current_ball += 1
-			for ball in potted_balls:
-				if "Ball_" + str(current_ball) == ball.name:
-					current_ball += 1
+		
 		# Remove the ball from the list of the remaining balls
 		get_node("Ball Colors/" + body.name).visible = false
 		if body == nine_ball:
@@ -215,7 +208,11 @@ func potted_ball(body):
 				$"Ball Colors/outline".visible = false
 		else:
 			hide_ball(body)
-
+		# Update the remaining balls and highlight the lowest ball on the table
+		for ball in potted_balls:
+			balls_remaining.erase(ball)
+			balls_remaining.sort_custom(func(a, b):return int(str(a.name)[-1]) < int(str(b.name)[-1]))
+			current_ball = int(str(balls_remaining[0].name)[-1])
 		set_lowest_ball()
 
 func hide_ball(ball):
@@ -225,8 +222,8 @@ func hide_ball(ball):
 	ball.call_deferred("set_sleeping", true)
 	ball.set_deferred("freeze", true)	
 	ball.global_position.x = -500
-func _on_cue_shoot(force) -> void:
 	
+func _on_cue_shoot(force) -> void:
 	nine_to_reset = false
 	legal_hit = false
 	cushion_hit = false
@@ -235,67 +232,31 @@ func _on_cue_shoot(force) -> void:
 	scratched = false
 	cue_ball_collided = false
 	signal_emitted = false
-	# Get the amount of the spin on the Y axis
-	spin = $Spin/Area2D.spin_y
-	ramped = false
-	spin_state = 'neutral'
-	if spin > 0:
-		spin_state = 'top'
-	elif spin < 0:
-		spin_state = 'back'
-		
-	rolling_spin = 1.0006
-	vel = force
+	# Get the amount of the spin on the X and Y axis
+	cue_ball.side_spin = $Spin/Area2D.spin_x
+	cue_ball.spin = $Spin/Area2D.spin_y
+	#cue_ball.starting_vel = force
 	
 	$Cue.hide()
 	$Cue.moving_balls = true
 	
 	enable_ball_physics()
 	# Shoot
+	vel = force
 	cue_ball.apply_central_impulse(vel)
 	$"Cue Hit sound".volume_db = min(0 - (1750 - vel.length())/100, 0)
 	$"Cue Hit sound".play()
 	$Cue.reset_cue(cue_ball.position)
 	$Spin/Area2D.reset_spin()
-	# Start to gain rolling spin from the friction with the cloth
-	ramping_up = true
 	
 func apply_spin():
-	var step = 0.245
-	if spin > 0:
-		step = 0.205
+	var step = 0.295
+	if cue_ball.spin > 0:
+		step = 0.265
+
 	# Spin decay
-	spin = move_toward(spin, 0, step/$Cue.power)
-	# Start ramping up the rolling spin if the ball has no backwards rotation
-	if spin >= 0:
-		if not ramped:
-			apply_roll()
-		var cvel = vel
-		if spin_state == 'back':
-			cvel = vel * -1
-		else:
-			cvel = vel
-		# Apply the rolling spin force to the cue ball 
-		cue_ball.apply_central_impulse(cvel * rolling_spin * 0.000023)
-		if cue_ball_collided:
-			# Rolling spin decay
-			rolling_spin = move_toward(rolling_spin, 0, 9)	
+	cue_ball.spin = move_toward(cue_ball.spin, 0, step/$Cue.power)	
 	
-func apply_roll():
-	if ramping_up:
-		rolling_spin *= 1.9
-		if rolling_spin > 300:
-			ramped = true
-			# Restart ramping up after collision
-			if cue_ball_collided:
-				cue_ball_collided = false
-				ramping_up = true
-				reset_rolling_spin()
-			ramping_up = false
-			ramped = true
-		
-func reset_rolling_spin():
-	rolling_spin = 1.0006
 
 func _on_ball_collision(body) -> void:
 	# Cue ball contact with another ball:
@@ -309,6 +270,7 @@ func _on_ball_collision(body) -> void:
 				legal_hit = true
 	# Cue ball contact with cushion
 	if is_instance_of(body, StaticBody2D):
+
 		rolling_spin /= 1.2
 		if legal_hit:
 			cushion_hit = true
@@ -363,8 +325,6 @@ func pseudo_shoot():
 	scratched = false
 	nine_to_reset = false
 	signal_emitted = false
-	spin = $Spin/Area2D.spin_y
-	rolling_spin = 1.0006
 	$Cue.hide()
 	$Cue.moving_balls = true
 	enable_ball_physics()
