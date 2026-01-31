@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var friction = 0.012
+@export var friction = 0.009
 
 func _physics_process(_delta):
 	for body in get_overlapping_bodies():
